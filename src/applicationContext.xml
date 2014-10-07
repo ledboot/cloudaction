@@ -13,56 +13,15 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<context:component-scan base-package="com.cloudaction"></context:component-scan>
 
 	<!-- 加载数据源配置文件 -->
-	<bean id="propertyConfig"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location">
-			<list>
-				<value>classpath:db.properties</value>
-			</list>
-		</property>
-	</bean>
-
-	<!-- 配置数据源 -->
-	<bean id="readDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close">
-		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl">
-			<value><![CDATA[jdbc:mysql://${db.read.host}:${db.read.port}/${db.read.database}?useUnicode=true&characterEncoding=gbk&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true]]></value>
-		</property>
-		<property name="user" value="${db.read.userName}" />
-		<property name="password" value="${db.read.password}" />
-		<property name="maxPoolSize" value="12" />
-		<property name="minPoolSize" value="0" />
-		<property name="maxStatements" value="100" />
-		<property name="initialPoolSize" value="3" />
-		<!-- 最大空闲时间，20表示20秒内无使用，则连接被丢弃，如果为0,表示始终保持连接 Default:0 -->
-		<property name="maxIdleTime" value="20" />
-		<property name="idleConnectionTestPeriod" value="10" />
-		<property name="testConnectionOnCheckin" value="true" />
-		<property name="testConnectionOnCheckout" value="false" />
-		<property name="preferredTestQuery" value="SELECT 1 FROM DUAL" />
-	</bean>
-
-	<!-- 配置读的 ibatis （从库） -->
-	<bean id="readSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="readDataSource" />
-		<property name="configLocation" value="classpath:sqlMapConfig.xml" />
-	</bean>
-
-	<bean id="readSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="readSqlSessionFactory" />
-	</bean>
-
+	<context:property-placeholder location="classpath:dbloc.properties"/>
 
  	<!-- 配置数据源（主库） -->
-	<bean id="writeDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl">
-			<value><![CDATA[jdbc:mysql://${db.write.host}:${db.write.port}/${db.write.database}?useUnicode=true&characterEncoding=gbk&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true]]></value>
-		</property>
-		<property name="user" value="${db.write.userName}" />
-		<property name="password" value="${db.write.password}" />
+		<property name="jdbcUrl"  value="jdbc:mysql://localhost:3306/cloudaction?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"/>
+		<property name="user" value="root" />
+		<property name="password" value="123456" />
 		<property name="maxPoolSize" value="12" />
 		<property name="minPoolSize" value="0" />
 		<property name="maxStatements" value="100" />
@@ -71,22 +30,21 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="idleConnectionTestPeriod" value="10" />
 		<property name="testConnectionOnCheckin" value="true" />
 		<property name="testConnectionOnCheckout" value="false" />
-		<property name="preferredTestQuery" value="SELECT 1 FROM DUAL" />
 	</bean>
 	
 	<!-- 配置写的ibatis （主库）-->
-	<bean id="writeSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" value="writeDataSource"/>
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource"  ref="dataSource"/>
 		<property name="configLocation" value="classpath:sqlMapConfig.xml" />
 	</bean>
 	
-	<bean id="writeSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="writeSqlSessionFactory"/>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sessionFactory"/>
 	</bean>
 	
 	 <!-- 事务控制 （主库）-->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="writeDataSource"/>
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
 </beans>

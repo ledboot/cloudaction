@@ -25,9 +25,8 @@
     </settings>  
     <typeAliases>
    		 <typeAlias alias="CloudUser"  type="com.cloudaction.model.CloudUser" />
-   		
 	</typeAliases>
     <mappers>
-    
+    	<mapper resource="com/cloudaction/dao/sqlmap/UserMapper.xml"/>
     </mappers>
 </configuration>
