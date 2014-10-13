@@ -15,20 +15,26 @@ import com.cloudaction.service.UserService;
 
 @Controller
 public class UserController {
-    
-    @Resource(name = "userService")
-    private UserService userService;
 
-    @RequestMapping(value="/login",method=RequestMethod.POST)
-    public void findUserById(@RequestParam Map<String, String> params,HttpServletRequest request){
-	String userName = params.get("username").toString();
-	String passWord = params.get("password").toString();
-	CloudUser user = userService.findById(1);
-	System.out.println(user.getUserName());
-    }
-    
-    @RequestMapping(value="/")
-    public String index(){
-	return "index";
-    }
+	@Resource(name = "userService")
+	private UserService userService;
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public void findUserById(@RequestParam Map<String, String> params,
+			HttpServletRequest request) {
+		String userName = params.get("login_name").toString();
+		String passWord = params.get("login_password").toString();
+		CloudUser user = userService.findById(1);
+		System.out.println(user.getUserName());
+	}
+
+	@RequestMapping(value = "/")
+	public String index() {
+		return "index";
+	}
+	
+	@RequestMapping(value="/signin",method = RequestMethod.GET)
+	public String  signIn(HttpServletRequest request){
+		return "login";
+	}
 }
