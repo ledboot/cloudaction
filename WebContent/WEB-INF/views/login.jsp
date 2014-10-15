@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/views/common/tag.jsp"%>
 <!DOCTYPE>
 <html lang="zh-cn">
@@ -14,25 +13,12 @@
 <link href="<%=request.getContextPath()%>/assets/css/base_outer.css"
 	rel="stylesheet" />
 <script src="<%=request.getContextPath()%>/assets/js/app.js"></script>
+<link id ="linkRoot" href="/cloudaction">
 <title>首页</title>
 </head>
-<body class="page_index">
+<body class="page_index" >
 	<!-- navbar -->
 	<header id="header">
-		<!--[if lte IE 9]>
-    <div id="warning_info" class="text-warning fade in mb_0">
-        <button data-dismiss="alert" class="close" type="button">×</button>
-        <strong>您正在使用低版本浏览器，</strong> 在本页面的显示效果可能有差异。
-        建议您升级到
-        <a href="http://www.google.cn/intl/zh-CN/chrome/" target="_blank">Chrome</a>
-        或以下浏览器：
-        <a href="www.mozilla.org/en-US/firefox/‎" target="_blank">Firefox</a> /
-        <a href="http://www.apple.com.cn/safari/" target="_blank">Safari</a> /
-        <a href="http://www.opera.com/" target="_blank">Opera</a> /
-        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">
-            Internet Explorer 10</a>
-    </div>
-    <![endif]-->
 		<nav id="header_outer"
 			class="navbar navbar-inverse navbar-default navbar-fixed-top"
 			role="navigation">
@@ -69,8 +55,7 @@
 	<!-- end narbar -->
 	<div id="wrap-all">
 		<div id="main" class="inner">
-			<div class="other-warp login-wrap" ng-app="validationApp"
-				ng-controller="user_login_ctrl">
+			<div class="other-warp login-wrap" ng-app="loginModule" >
 				<div data-minheight="58" class="single-panel clearfix"
 					style="min-height: 275px;">
 					<div class="single-panel-inner login-mini ng-scope">
@@ -79,8 +64,8 @@
 						</div>
 						<div class="single-panel-body">
 							<div class="single-panel-section">
-								<form novalidate name="login_form"
-									class="form-horizontal wt-form ng-pristine ng-invalid ng-invalid-required">
+								<form name="login_form"  ng-submit="submit()"
+									class="form-horizontal wt-form ng-pristine ng-invalid ng-invalid-required"  ng-controller="loginCtrl"  novalidate >
 									<div class="form-group">
 										<div class="input-group">
 											<span class="input-group-addon"><i
@@ -97,23 +82,17 @@
 												class="icon icon-lock"></i></span> <input
 												class="form-control ng-pristine ng-valid-minlength ng-invalid ng-invalid-required valid"
 												type="password" placeholder="输入密码" name="login_password"
-												ng-model="signin_user.password" required ng-minlength="6">
+												ng-model="signin_user.password" required ng-minlength="5">
 										</div>
 									</div>
 
-									<div class="form-group" ng-if="login_form.$errors.length > 0">
+									<div class="form-group" ng-if="errors.length>0">
 										<div class="alert alert-danger">
-											<i class="icon-remove-sign mr_5"></i>{{login_form.$errors[0]}}
+											<i class="icon-remove-sign mr_5"></i>{{errors[0]}}
 										</div>
 									</div>
-									<div class="alert alert-danger">
-										<i class="icon-remove-sign mr_5"></i>{{login_form.$errors[0]}}
-									</div>
 									<div class="form-group">
-										<button ng-submit="submitForm()"
-											class="btn btn-success btn-lg btn-block" type="button"
-											data-loading-text="登录中..."
-											loading-status="signin_user.is_login_ing">登 录</button>
+										<input type="submit" class="btn btn-success btn-lg btn-block" ng-disabled="!login_form.$valid" value="登 录"/>
 									</div>
 								</form>
 							</div>
@@ -127,16 +106,6 @@
 					</div>
 
 				</div>
-				<script type="text/javascript">
-				var validationApp = angular.module('validationApp',[]);
-				validationApp.controller('user_login_ctrl',function ($scope){
-					$scope.signin_user = {name:"",password:""};
-					var errors={msg:"error"};
-					$scope.submitForm = function(){
-						alert("xxx");
-					}
-				});
-				</script>
 			</div>
 		</div>
 	</div>

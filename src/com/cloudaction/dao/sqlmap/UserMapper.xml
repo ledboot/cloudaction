@@ -4,4 +4,10 @@
     <select id="selectById" parameterType="int"  resultType="CloudUser">
         select * from cloud_user where id = #{id}
     </select>
+    <select id="selectByName" parameterType="map" resultType="CloudUser">
+    	 select u.* from cloud_user u where u.username = #{name} and u.password=#{pwd}
+    </select>
+    <select id="selectByMail" parameterType="map" resultType="CloudUser">
+    	 select u.* from cloud_user u where u.email = #{mail} and u.password=#{pwd}
+    </select>
 </mapper>
