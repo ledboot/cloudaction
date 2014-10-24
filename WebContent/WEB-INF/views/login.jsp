@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/views/common/tag.jsp"%>
 <!DOCTYPE>
-<html lang="zh-cn">
+<html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,11 +12,11 @@
 	rel="stylesheet" />
 <link href="<%=request.getContextPath()%>/assets/css/base_outer.css"
 	rel="stylesheet" />
-<script src="<%=request.getContextPath()%>/assets/js/app.js"></script>
-<link id ="linkRoot" href="/cloudaction">
+<link id="linkRoot" href="/cloudaction">
+
 <title>首页</title>
 </head>
-<body class="page_index" >
+<body class="page_index">
 	<!-- navbar -->
 	<header id="header">
 		<nav id="header_outer"
@@ -55,7 +55,7 @@
 	<!-- end narbar -->
 	<div id="wrap-all">
 		<div id="main" class="inner">
-			<div class="other-warp login-wrap" ng-app="loginModule" >
+			<div class="other-warp login-wrap" ng-app="loginModule">
 				<div data-minheight="58" class="single-panel clearfix"
 					style="min-height: 275px;">
 					<div class="single-panel-inner login-mini ng-scope">
@@ -64,8 +64,9 @@
 						</div>
 						<div class="single-panel-body">
 							<div class="single-panel-section">
-								<form name="login_form"  ng-submit="submit()"
-									class="form-horizontal wt-form ng-pristine ng-invalid ng-invalid-required"  ng-controller="loginCtrl"  novalidate >
+								<form name="login_form" ng-submit="submit()"
+									class="form-horizontal wt-form ng-pristine ng-invalid ng-invalid-required"
+									ng-controller="loginCtrl" novalidate>
 									<div class="form-group">
 										<div class="input-group">
 											<span class="input-group-addon"><i
@@ -92,7 +93,8 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<input type="submit" class="btn btn-success btn-lg btn-block" ng-disabled="!login_form.$valid" value="登 录"/>
+										<input type="submit" class="btn btn-success btn-lg btn-block"
+											ng-disabled="!login_form.$valid" value="登 录" />
 									</div>
 								</form>
 							</div>
@@ -109,5 +111,6 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/app.js"></script>
 </body>
 </html>

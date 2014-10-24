@@ -1,8 +1,8 @@
 var loginModule = angular.module('loginModule',[]);
 loginModule.config(['$httpProvider', '$provide',function ($httpProvider,$provide) {    
-	$provide.value("webRoot", $("#linkRoot").attr("href"));
-	//$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-	$httpProvider.defaults.headers.post['Content-Type'] = 'text/html; charset=utf-8';
+	//$provide.value("webRoot", $("#linkRoot").attr("href"));
+	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+	//$httpProvider.defaults.headers.post['Content-Type'] = 'text/html; charset=utf-8';
 }]);
 loginModule.controller('loginCtrl',['$scope','$http','webRoot',function ($scope,$http,root){
 	$scope.signin_user = {name:"",password:""};
@@ -11,11 +11,11 @@ loginModule.controller('loginCtrl',['$scope','$http','webRoot',function ($scope,
 		//console.log("path:"+$location.path());
 		if($scope.login_form.$valid){
 			var data ="name="+$scope.signin_user.name+"&password="+$scope.signin_user.password;
-			console.log(data);
+			//console.log(data);
 			$http({
 				method:'post',
-				url:root+'/login',
-				data:$scope.signin_user
+				url:'../login',
+				data:data
 			})
 			.success(function(data,status){
 				console.log(data);

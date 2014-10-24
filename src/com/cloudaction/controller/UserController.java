@@ -1,6 +1,5 @@
 package com.cloudaction.controller;
 
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +22,15 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String  findUserById(@RequestParam Map<String, String> params) {
-		String account = params.get("name").toString();
-		String passWord = params.get("password").toString();
+	public @ResponseBody String  findUserById(@RequestParam("name") String name,@RequestParam("password") String password) {
+		//String dat = params;
+		String account = name;
+		String passWord = password;
+		
+		//String account = params.get("name").toString();
+		//String account = params.get("name").toString();
+		//String passWord = params.get("password").toString();
+		//String passWord = params.get("password").toString();
 		CloudUser user = userService.findByNameOrMail(account, passWord);
 		//System.out.println(user.getUserName());
 		XStream xStream = new XStream(new JettisonMappedXmlDriver());
