@@ -8,12 +8,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@include file="/WEB-INF/views/common/js.jsp"%>
 <%@include file="/WEB-INF/views/common/css.jsp"%>
-<link href="<%=request.getContextPath()%>/assets/css/base_common.css"
-	rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/assets/css/base_outer.css"
-	rel="stylesheet" />
+<link href="${ctx}/assets/css/base_common.css" rel="stylesheet" />
+<link href="${ctx}/assets/css/base_outer.css" rel="stylesheet" />
 <link id="linkRoot" href="/cloudaction">
-
+<script type="text/javascript" src="${ctx}/assets/js/app.js"></script>
+<script type="text/javascript">
+	angular.module('loginModule').config(['$httpProvider', '$provide',function ($httpProvider,$provide) {    
+		//$provide.value("webRoot", $("#linkRoot").attr("href"));
+		$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+		//$httpProvider.defaults.headers.post['Content-Type'] = 'text/html; charset=utf-8';
+	}]);
+	angular.module('loginModule').controller('loginCtrl',['$scope','$http',function ($scope,$http){
+		$scope.errors = [];
+		$scope.submit = function(){
+			//console.log("path:"+$location.path());
+			if($scope.login_form.$valid){
+				var data ="name="+$scope.signin.name+"&password="+$scope.signin.password;
+				console.log(data);
+				$http({
+					method:'post',
+					url:'${pageContext.request.contextPath}/login',
+					data:data
+				})
+				.success(function(data,status){
+					console.log(data);
+				})
+				.error(function(data,status){
+					console.log('status:'+status);
+					$scope.errors.push(status);
+				});
+			}
+		};
+	}]);
+</script>
 <title>首页</title>
 </head>
 <body class="page_index">
@@ -41,8 +68,7 @@
 					<li><a href="/club">社区</a></li>
 				</ul>
 
-				<ul class="nav navbar-nav navbar-right" ng-controller="user_ctrl"
-					id="header_me">
+				<ul class="nav navbar-nav navbar-right"  id="header_me">
 					<li class="divider-vertical hidden-xs"></li>
 
 					<li><a class="mr_15" href="/signin">登录</a></li>
@@ -72,8 +98,8 @@
 											<span class="input-group-addon"><i
 												class="icon icon-user"></i></span> <input
 												class="form-control ng-pristine ng-invalid ng-invalid-required valid"
-												type="text" placeholder="输入用户名/邮箱" name="login_name"
-												ng-model="signin_user.name" required>
+												type="text" placeholder="输入用户名/邮箱" name="name"
+												ng-model="signin.name" required>
 										</div>
 									</div>
 
@@ -82,8 +108,8 @@
 											<span class="input-group-addon fs_17"><i
 												class="icon icon-lock"></i></span> <input
 												class="form-control ng-pristine ng-valid-minlength ng-invalid ng-invalid-required valid"
-												type="password" placeholder="输入密码" name="login_password"
-												ng-model="signin_user.password" required ng-minlength="5">
+												type="password" placeholder="输入密码" name="password"
+												ng-model="signin.password" required ng-minlength="5">
 										</div>
 									</div>
 
@@ -111,6 +137,5 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/app.js"></script>
 </body>
 </html>

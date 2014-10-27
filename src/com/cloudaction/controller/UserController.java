@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.cloudaction.model.CloudUser;
 import com.cloudaction.service.UserService;
 import com.thoughtworks.xstream.XStream;
@@ -22,7 +23,7 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody String  findUserById(@RequestParam("name") String name,@RequestParam("password") String password) {
+	public @ResponseBody  String  findUserById(@RequestParam("name") String name,@RequestParam("password") String password) {
 		//String dat = params;
 		String account = name;
 		String passWord = password;
@@ -32,14 +33,19 @@ public class UserController {
 		//String passWord = params.get("password").toString();
 		//String passWord = params.get("password").toString();
 		CloudUser user = userService.findByNameOrMail(account, passWord);
+		if(user != null){
+			return "/";
+		}else{
+			return "error";
+		}
 		//System.out.println(user.getUserName());
-		XStream xStream = new XStream(new JettisonMappedXmlDriver());
+		/*XStream xStream = new XStream(new JettisonMappedXmlDriver());
 		xStream.alias("user", CloudUser.class);
 		if(user != null){
 			return xStream.toXML(user);
 		}else{
 			return xStream.toXML(user);
-		}
+		}*/
 	}
 
 	@RequestMapping(value = "/")
