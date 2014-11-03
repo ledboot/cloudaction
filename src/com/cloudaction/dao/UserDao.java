@@ -14,8 +14,8 @@ public class UserDao extends BaseDao{
 	 * @param id
 	 * @return
 	 */
-    public CloudUser findById(int id){
-    	return this.sessionTemplate.selectOne("com.cloudaction.dao.UserDao.selectById",id);
+    public CloudUser findById(String id){
+    	return queryUnique("com.cloudaction.dao.UserDao.selectById", id);
     }
     
     /**
@@ -23,8 +23,8 @@ public class UserDao extends BaseDao{
      * @param name
      * @return
      */
-    public CloudUser findByName(Map<String, Object> map){
-    	return this.sessionTemplate.selectOne("com.cloudaction.dao.UserDao.selectByName", map);
+    public CloudUser findByNamePwd(Map<String, Object> map){
+    	return queryUnique("com.cloudaction.dao.UserDao.selectByNamePwd", map);
     }
     
     /**
@@ -32,7 +32,11 @@ public class UserDao extends BaseDao{
      * @param mail
      * @return
      */
-    public CloudUser findByMail(Map<String, Object> map){
-    	return this.sessionTemplate.selectOne("com.cloudaction.dao.UserDao.selectByMail", map);
+    public CloudUser findByMailPwd(Map<String, Object> map){
+    	return queryUnique("com.cloudaction.dao.UserDao.selectByMailPwd", map);
+    }
+    
+    public CloudUser findByName(Map<String, Object> map){
+    	return queryUnique("com.cloudaction.dao.UserDao.selectByName", map);
     }
 }

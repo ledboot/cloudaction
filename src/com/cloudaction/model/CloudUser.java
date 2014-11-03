@@ -1,5 +1,6 @@
 package com.cloudaction.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -10,7 +11,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author viky
  *	@date 2014-09-26
  */
-public class CloudUser {
+public class CloudUser implements Serializable {
 
 	@XStreamOmitField
 	private Integer id;
