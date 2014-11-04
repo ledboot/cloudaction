@@ -7,8 +7,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@include file="/WEB-INF/views/common/css.jsp"%>
-<link href="<%=request.getContextPath()%>/assets/css/base_common.css" rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/assets/css/base_outer.css" rel="stylesheet" />
+<link href="${ctx }/assets/css/base_common.css" rel="stylesheet" />
+<link href="${ctx }/assets/css/base_outer.css" rel="stylesheet" />
 <title>首页</title>
 </head>
 <body class="page_index">

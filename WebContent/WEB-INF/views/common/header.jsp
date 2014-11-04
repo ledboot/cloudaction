@@ -30,6 +30,7 @@
 
 				<ul id="header_menu" class="nav navbar-nav">
 					<li><a href="${ctx }/">首页</a></li>
+					<li><a href="${ctx }/feature">功能</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right"  id="header_me">

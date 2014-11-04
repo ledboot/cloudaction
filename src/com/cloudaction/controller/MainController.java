@@ -24,4 +24,9 @@ public class MainController {
 		request.getSession().removeAttribute("user");
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/feature",method = RequestMethod.GET)
+	public String feature(HttpServletRequest request){
+		return "app";
+	}
 }
